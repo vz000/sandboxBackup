@@ -1,0 +1,24 @@
+*** Lost previous steps: 
+	**** I did not saved the changes and lost my notes.
+
+------- INSTALLING tcpdump -------------
+sudo apt-get install tcpdump apparmor-utils
+sudo aa-disable /usr/sbin/tcpdump
+ ----> Not always necessary: see documentation.
+ 	In my case: sudo aa-disable /usr/bin/tcpdump
+ 	Use the following to find where tcpdump was installed:
+ 		dpkg -L tcpdump
+
+sudo apt-get install tcpdump
+ ----> Already installed.
+sudo groupadd pcap
+sudo usermod -a -G pcap cuckoo
+ ---> (with my username): sudo usermode -a -G pcap v
+sudo chgrp pcap /usr/bin/tcpdump
+sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/tcpdump
+-----> Offical cuckoo's documentation: /usr/sbin/tcpdump
+	VERIFY RESULTS:
+	$ getcap /usr/bin/tcpdump
+	/usr/sbin/tcpdump = cap_net_admin,cap_net_raw+eip
+
+
